@@ -150,46 +150,57 @@ public class ProjectController {
 		return "redirect:/home";
 
 	}
-	
+
 	@GetMapping("/tables")
-	public String allTables(HttpSession session ,Model model) {
+	public String allTables(HttpSession session, Model model) {
 		if (session.getAttribute("loggedInUser").equals(null)) {
 			return "/login";
 		}
 		User user = (User) session.getAttribute("loggedInUser");
 		List<TableClass> Tables = tableService.findAllTables();
 		model.addAttribute("Tables", Tables);
-		
+
 		return "allTablles";
 	}
-	
-	   @GetMapping("/tables/{id}/edit")
-	    public String edit(@PathVariable("id") Long id, HttpSession session, Model model) {
-		   if (session.getAttribute("loggedInUser").equals(null)) {
-				return "/login";
-			}
-		   TableClass table = tableService.findTable(id);
-		   if(table == null) {
-			   return "homePage";
-		   }
-	       // Book book = bookServ.findById(id);
-	        model.addAttribute("table" , table);
-	       
-	        return "editTable";
-	    }
 
-	    @PostMapping("/tables/{id}/edit")
-	    public String update(@PathVariable("id") Long id, @Valid @ModelAttribute("table") TableClass table, BindingResult result, HttpSession session) {
-	    	if (session.getAttribute("loggedInUser").equals(null)) {
-				return "/login";
-			}
-	        if(result.hasErrors()) {
-	            return "editTable";
-	        }
-	        User user = (User) session.getAttribute("loggedInUser");
-	        tableService.updateTable(new TableClass(id, table.getNameGuest(), table.getNumberOfGuests(), table.getNotes(), table.getCreatedAt(), user));
-	        return "redirect:/home";
-	    }
+	@GetMapping("/tables/{id}/edit")
+	public String edit(@PathVariable("id") Long id, HttpSession session, Model model) {
+		if (session.getAttribute("loggedInUser").equals(null)) {
+			return "/login";
+		}
+		TableClass table = tableService.findTable(id);
+		if (table == null) {
+			return "homePage";
+		}
+		// Book book = bookServ.findById(id);
+		model.addAttribute("table", table);
+
+		return "editTable";
+	}
+
+	@PostMapping("/tables/{id}/edit")
+	public String update(@PathVariable("id") Long id, @Valid @ModelAttribute("table") TableClass table,
+			BindingResult result, HttpSession session) {
+		if (session.getAttribute("loggedInUser").equals(null)) {
+			return "/login";
+		}
+		if (result.hasErrors()) {
+			return "editTable";
+		}
+		User user = (User) session.getAttribute("loggedInUser");
+		tableService.updateTable(new TableClass(id, table.getNameGuest(), table.getNumberOfGuests(), table.getNotes(),
+				table.getCreatedAt(), user));
+		return "redirect:/home";
+	}
+
+	@PostMapping("/table/delete/{id}")
+	public String deletetable(@PathVariable("id") Long id, HttpSession session) {
+		if (session.getAttribute("loggedInUser").equals(null)) {
+			return "/login";
+		}
+		tableService.deleteTable(tableService.findTable(id));
+		return "redirect:/home";
+	}
 
 	@RequestMapping("/admin")
 	public String adminPage(Principal principal, Model model) {

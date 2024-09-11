@@ -38,8 +38,13 @@
 					<td><c:out value="${table.notes}" /></td>
 					<td><c:out value="${table.createdAt}" /></td>
 					<td>
+						<form action="/table/delete/${table.getTableId()}" method="post">
+							<input type="submit" value="Finished">
+						</form>
+
+
 						<form action="/tables/${table.getTableId()}/edit" method="Get">
-							<input type="submit" value="Edit" >
+							<input type="submit" value="Edit">
 						</form>
 
 
