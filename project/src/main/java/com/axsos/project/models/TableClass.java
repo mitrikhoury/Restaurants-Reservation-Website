@@ -36,7 +36,6 @@ public class TableClass {
 	}
 
 	
-	
 	public TableClass(Long tableId, @NotEmpty(message = "Guest name is required!") String nameGuest, int numberOfGuests,
 			String notes, Date createdAt, User user) {
 		super();

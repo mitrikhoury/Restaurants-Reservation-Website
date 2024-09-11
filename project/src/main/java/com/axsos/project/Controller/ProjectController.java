@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -99,7 +100,6 @@ public class ProjectController {
 
 		// Initialize BCryptPasswordEncoder
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-     System.out.println( "kkkkkk"+ passwordEncoder.encode(user.getPassword()));
 		// Compare the hashed password from the form with the one stored in the database
 		if (!passwordEncoder.matches(loginUser.getPassword(), user.getPassword())) {
 			System.out.println("Stored (hashed) password: " + user.getPassword());
@@ -162,6 +162,34 @@ public class ProjectController {
 		
 		return "allTablles";
 	}
+	
+	   @GetMapping("/tables/{id}/edit")
+	    public String edit(@PathVariable("id") Long id, HttpSession session, Model model) {
+		   if (session.getAttribute("loggedInUser").equals(null)) {
+				return "/login";
+			}
+		   TableClass table = tableService.findTable(id);
+		   if(table == null) {
+			   return "homePage";
+		   }
+	       // Book book = bookServ.findById(id);
+	        model.addAttribute("table" , table);
+	       
+	        return "editTable";
+	    }
+
+	    @PostMapping("/tables/{id}/edit")
+	    public String update(@PathVariable("id") Long id, @Valid @ModelAttribute("table") TableClass table, BindingResult result, HttpSession session) {
+	    	if (session.getAttribute("loggedInUser").equals(null)) {
+				return "/login";
+			}
+	        if(result.hasErrors()) {
+	            return "editTable";
+	        }
+	        User user = (User) session.getAttribute("loggedInUser");
+	        tableService.updateTable(new TableClass(id, table.getNameGuest(), table.getNumberOfGuests(), table.getNotes(), table.getCreatedAt(), user));
+	        return "redirect:/home";
+	    }
 
 	@RequestMapping("/admin")
 	public String adminPage(Principal principal, Model model) {

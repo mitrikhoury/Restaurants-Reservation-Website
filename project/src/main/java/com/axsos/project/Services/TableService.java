@@ -50,4 +50,9 @@ public class TableService {
 	   tables.add(new TableClass((long) 3, "Alice Johnson", 3, "Business meeting", new Date(), user));
        return tables;
    }
+   
+   public TableClass updateTable(TableClass table) {
+       return tableRepository.save(table);
+   }
+
 }
