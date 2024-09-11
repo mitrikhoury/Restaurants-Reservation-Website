@@ -99,7 +99,7 @@ public class ProjectController {
 
 		// Initialize BCryptPasswordEncoder
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
+     System.out.println( "kkkkkk"+ passwordEncoder.encode(user.getPassword()));
 		// Compare the hashed password from the form with the one stored in the database
 		if (!passwordEncoder.matches(loginUser.getPassword(), user.getPassword())) {
 			System.out.println("Stored (hashed) password: " + user.getPassword());
@@ -149,6 +149,18 @@ public class ProjectController {
 		tableService.createTable(table);
 		return "redirect:/home";
 
+	}
+	
+	@GetMapping("/tables")
+	public String allTables(HttpSession session ,Model model) {
+		if (session.getAttribute("loggedInUser").equals(null)) {
+			return "/login";
+		}
+		User user = (User) session.getAttribute("loggedInUser");
+		List<TableClass> Tables = tableService.findAllTables();
+		model.addAttribute("Tables", Tables);
+		
+		return "allTablles";
 	}
 
 	@RequestMapping("/admin")
