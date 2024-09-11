@@ -31,11 +31,11 @@ public class ProjectController {
 	private UserValidator userValidator;
 
 	private TableService tableService;
-	
-	public ProjectController(UserService userService, UserValidator userValidator , TableService tableService) {
+
+	public ProjectController(UserService userService, UserValidator userValidator, TableService tableService) {
 		this.userService = userService;
 		this.userValidator = userValidator;
-		this.tableService=tableService;
+		this.tableService = tableService;
 	}
 
 	@GetMapping("/registration")
@@ -57,10 +57,6 @@ public class ProjectController {
 		return "redirect:/login";
 	}
 
-
-
-
-
 	@RequestMapping("/login")
 	public String login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, Model model, HttpSession session,
@@ -81,55 +77,80 @@ public class ProjectController {
 		if (logout != null) {
 			model.addAttribute("logoutMessage", "Logout Successful!");
 		}
-		//model.addAttribute("loginUser", new User()); // Add this line to ensure
+		// model.addAttribute("loginUser", new User()); // Add this line to ensure
 		// loginUser is available
 		return "loginPage";
 	}
-	
+
 	@PostMapping("/loginn")
-	public String login2(@ModelAttribute("loginUser") User loginUser, 
-	                     BindingResult result, 
-	                     Model model, 
-	                     HttpSession session) {
-	    if (result.hasErrors()) {
-	        model.addAttribute("errorMessage", "Validation failed: " + result.getAllErrors());
-	        return "loginPage";
-	    }
+	public String login2(@ModelAttribute("loginUser") User loginUser, BindingResult result, Model model,
+			HttpSession session) {
+		if (result.hasErrors()) {
+			model.addAttribute("errorMessage", "Validation failed: " + result.getAllErrors());
+			return "loginPage";
+		}
 
-	    // Fetch the user from the database using the email
-	    User user = userService.findByEmail(loginUser.getEmail());
-	    if (user == null) {
-	        model.addAttribute("errorMessage", "User not found.");
-	        return "loginPage";
-	    }
+		// Fetch the user from the database using the email
+		User user = userService.findByEmail(loginUser.getEmail());
+		if (user == null) {
+			model.addAttribute("errorMessage", "User not found.");
+			return "loginPage";
+		}
 
-	    // Initialize BCryptPasswordEncoder
-	    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		// Initialize BCryptPasswordEncoder
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-	    // Compare the hashed password from the form with the one stored in the database
-	    if (!passwordEncoder.matches(loginUser.getPassword(), user.getPassword())) {
-	        System.out.println("Stored (hashed) password: " + user.getPassword());
-	        System.out.println("Entered password: " + loginUser.getPassword());
-	        model.addAttribute("errorMessage", "Invalid password.");
-	        return "loginPage";
-	    }
+		// Compare the hashed password from the form with the one stored in the database
+		if (!passwordEncoder.matches(loginUser.getPassword(), user.getPassword())) {
+			System.out.println("Stored (hashed) password: " + user.getPassword());
+			System.out.println("Entered password: " + loginUser.getPassword());
+			model.addAttribute("errorMessage", "Invalid password.");
+			return "loginPage";
+		}
 
-	    // Login success, set user in session and redirect to the dashboard
-	    session.setAttribute("loggedInUser", user);
-	    return "redirect:/home";
-	}	
+		// Login success, set user in session and redirect to the dashboard
+		session.setAttribute("loggedInUser", user);
+		return "redirect:/home";
+	}
 
 	@RequestMapping(value = { "/home" })
 	public String home(Principal principal, Model model, HttpSession session) {
-		//String email = principal.getName();
-		
-	    User user =(User) session.getAttribute("loggedInUser");
-	    List<TableClass> Tables = tableService.findTablesByUser(user);
-	    model.addAttribute("userTables", Tables);
+		// String email = principal.getName();
+
+		User user = (User) session.getAttribute("loggedInUser");
+		List<TableClass> Tables = tableService.findTablesByUser(user);
+		model.addAttribute("userTables", Tables);
 		return "homePage";
 	}
-       /// *******************************************
-	
+
+	/// *******************************************
+	@GetMapping("/tables/new")
+	public String newTable(@ModelAttribute("table") TableClass table, HttpSession session) {
+		if (session.getAttribute("loggedInUser").equals(null)) {
+			return "/login";
+		}
+
+		return "newTable";
+	}
+
+	@PostMapping("/tables/new")
+	public String newTable2(@Valid @ModelAttribute("table") TableClass table, BindingResult result,
+			HttpSession session) {
+		if (session.getAttribute("loggedInUser").equals(null)) {
+			return "/login";
+		}
+		if (result.hasErrors()) {
+			return "newTable";
+		}
+
+		User user = (User) session.getAttribute("loggedInUser");
+
+		table.setUser(user);
+		tableService.createTable(table);
+		return "redirect:/home";
+
+	}
+
 	@RequestMapping("/admin")
 	public String adminPage(Principal principal, Model model) {
 		String username = principal.getName();

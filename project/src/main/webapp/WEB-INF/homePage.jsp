@@ -41,8 +41,8 @@
 </div>
 
 <div>
-<form>
-<input method="post" action="" />
+<form method="Get" action="/tables/new">
+<input type="submit" value=" + New Table"/>
 </form>
 </div>
 
