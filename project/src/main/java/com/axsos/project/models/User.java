@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -30,7 +31,7 @@ public class User {
 
 	@NotEmpty(message = "Username is required!")
 	@Size(min = 3, max = 30, message = "Username must be between 3 and 30 characters")
-	private String userName;
+	private String username;
 
 	@NotEmpty(message = "Email is required!")
 	@Email(message = "Please enter a valid email!")
@@ -53,25 +54,40 @@ public class User {
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roles;
 
+	 @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	    private List<TableClass> tables;
+
+	
 	public User() {
 	}
+//	public User(
+//			@NotEmpty(message = "Username is required!") @Size(min = 3, max = 30, message = "Username must be between 3 and 30 characters") String userName,
+//			@NotEmpty(message = "Email is required!") @Email(message = "Please enter a valid email!") String email,
+//			@NotEmpty(message = "Password is required!") @Size(min = 8, max = 128, message = "Password must be between 8 and 128 characters") String password,
+//			@NotEmpty(message = "Confirm Password is required!") @Size(min = 8, max = 128, message = "Confirm Password must be between 8 and 128 characters") String passwordConfirmation) {
+//		super();
+//		this.username = userName;
+//		this.email = email;
+//		this.password = password;
+//		this.passwordConfirmation = passwordConfirmation;
+//	}
 
 	public Long getId() {
 		return id;
 	}
+	
+	
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-
 	public String getEmail() {
 		return email;
 	}

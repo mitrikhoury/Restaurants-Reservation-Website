@@ -15,10 +15,10 @@
 	<c:if test="${errorMessage != null}">
 		<c:out value="${errorMessage}"></c:out>
 	</c:if>
-	<form method="POST" action="/login">
+	<form method="POST" action="/loginn">
 		<p>
-			<label for="userName">userName : </label> <input type="text" id="userName"
-				name="userName" />
+			<label for="email">Email : </label> <input type="text" id="email"
+				name="email" />
 		</p>
 		<p>
 			<label for="password">Password</label> <input type="password"

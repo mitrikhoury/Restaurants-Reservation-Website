@@ -1,4 +1,4 @@
-=<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
@@ -9,11 +9,46 @@
 <title>Welcome Page</title>
 </head>
 <body>
-    <h1>Welcome Page <c:out value="${currentUser.userName}"></c:out></h1>
+<div>
+<h1>Welcome Page <c:out value="${loggedInUser.username}"></c:out></h1>
     
     <form id="logoutForm" method="POST" action="/logout">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <input type="submit" value="Logout!" />
     </form>
+</div>
+
+<div>
+<h1>Your Tables</h1>
+<table border="1">
+    <tr>
+        <th>Guest Name</th>
+        <th>Number of Guests</th>
+        <th>Notes</th>
+        <th>Arrived At</th>
+        <th>Actions</th>
+    </tr>
+    <c:forEach var="table" items="${userTables}">
+        <tr>
+            <td><c:out value="${table.nameGuest}"/></td>
+            <td><c:out value="${table.numberOfGuests}"/></td>
+            <td><c:out value="${table.notes}"/></td>
+            <td><c:out value="${table.createdAt}"/></td>
+            <td>some actions maybe later</td>
+        </tr>
+    </c:forEach>
+</table>
+</div>
+
+<div>
+<form>
+<input method="post" action="" />
+</form>
+</div>
+
+<div>
+<a href="/tables">See Other Tables .</a>
+</div>
+    
 </body>
 </html>
