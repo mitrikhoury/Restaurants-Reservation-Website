@@ -62,5 +62,36 @@ public class TableService {
 	public TableClass updateTable(TableClass table) {
 		return tableRepository.save(table);
 	}
+	
+	  public List<TableClass> getTablesWithoutUserId() {
+	        return tableRepository.findTablesWithoutUserId();
+	    }
+	  
+	  public List<TableClass> getTablesWithUserId() {
+	        return tableRepository.findTablesWithUserId();
+	    }
+	  
+	  public void giveUpTable(Long id) {
+	        // Find the table by its ID
+	        TableClass table = tableRepository.findById(id).orElse(null);
+	        
+	        if (table != null) {
+	            // Set the user field to null
+	            table.setUser(null);
+	            // Save the updated table back to the database
+	            tableRepository.save(table);
+	        }
+	    }
+	  
+	  public void pickUpTable(Long table_id , User user) {
+		  TableClass table = tableRepository.findById(table_id).orElse(null);
+		  
+		  if(table != null) {
+			  
+			  table.setUser(user);
+			  
+			  tableRepository.save(table);
+		  }
+	  }
 
 }

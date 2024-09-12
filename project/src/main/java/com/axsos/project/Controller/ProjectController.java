@@ -58,7 +58,7 @@ public class ProjectController {
 		return "redirect:/login";
 	}
 
-	@RequestMapping("/login")
+	@GetMapping("/login")
 	public String login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, Model model, HttpSession session,
 			HttpServletRequest request) {
@@ -157,9 +157,11 @@ public class ProjectController {
 			return "/login";
 		}
 		User user = (User) session.getAttribute("loggedInUser");
-		List<TableClass> Tables = tableService.findAllTables();
+		List<TableClass> Tables = tableService.getTablesWithUserId();
+		List<TableClass> OpenTables = tableService.getTablesWithoutUserId();
+		
 		model.addAttribute("Tables", Tables);
-
+        model.addAttribute("Open_table", OpenTables);
 		return "allTablles";
 	}
 
@@ -172,10 +174,17 @@ public class ProjectController {
 		if (table == null) {
 			return "homePage";
 		}
-		// Book book = bookServ.findById(id);
+		User user =(User)session.getAttribute("loggedInUser");
+		System.out.println("user id " + user.getId());
+		System.out.println("user id of table =" + table.getUser().getId());
 		model.addAttribute("table", table);
-
-		return "editTable";
+        if(user.getId() == table.getUser().getId()) {
+        	return "editTable";
+        }else {
+        	System.out.println("you dont have access to this table ");
+        	return "";//add page for access denied
+        }
+		
 	}
 
 	@PostMapping("/tables/{id}/edit")
@@ -198,7 +207,27 @@ public class ProjectController {
 		if (session.getAttribute("loggedInUser").equals(null)) {
 			return "/login";
 		}
+		
 		tableService.deleteTable(tableService.findTable(id));
+		return "redirect:/home";
+	}
+	
+	@PostMapping("/Give_Up_Table/{id}")
+    public String Give_up_Table(@PathVariable("id") Long id, HttpSession session) {
+        if (session.getAttribute("loggedInUser") == null) {
+            return "redirect:/login"; 
+        }
+        tableService.giveUpTable(id); 
+        return "redirect:/tables";
+    }
+	
+	@PostMapping("/Pick_Up_Table/{id}")
+	public String Pick_up_table(@PathVariable("id") Long id, HttpSession session) {
+		if (session.getAttribute("loggedInUser") == null) {
+            return "redirect:/login"; 
+        }
+		User user = (User)session.getAttribute("loggedInUser");
+		tableService.pickUpTable(id, user);
 		return "redirect:/home";
 	}
 

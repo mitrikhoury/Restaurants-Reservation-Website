@@ -47,7 +47,9 @@
 							<input type="submit" value="Edit">
 						</form>
 
-
+						<form action="/Give_Up_Table/${table.getTableId()}" method="post">
+							<input type="submit" value="Give Up Table">
+						</form>
 					</td>
 				</tr>
 			</c:forEach>
