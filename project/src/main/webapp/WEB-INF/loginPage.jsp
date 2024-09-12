@@ -10,9 +10,11 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <p class="navbar-brand" >MK Restaurants</p>
-</nav>
+<header class=" navbar-expand-lg navbar-light text-black py-3 mb-4" style="background-color: #e3f2fd">
+        <div class="container">
+            <h1 class="display-4">MK Restaurant</h1>
+        </div>
+    </header>
 
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -54,11 +56,13 @@
     </div>
 </div>
 
-<footer class="bg-light py-3 mt-5">
-    <div class="container text-center">
-        <p class="mb-0">© 2024 MK Restaurants. All rights reserved.</p>
-    </div>
-</footer>
+<footer class=" text-black py-4 mt-5" style="background-color: #e3f2fd">
+        <div class="container text-center">
+            <p class="mb-0">© 2024 MK Restaurant. All rights reserved.</p>
+            <p class="mb-0">123 Main Street, City, Country</p>
+            <p class="mb-0">Email: contact@mkrestaurant.com | Phone: +123-456-7890</p>
+        </div>
+    </footer>
 
 <!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

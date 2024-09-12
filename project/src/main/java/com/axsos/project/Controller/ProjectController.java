@@ -237,6 +237,11 @@ public class ProjectController {
 		tableService.pickUpTable(id, user);
 		return "redirect:/home";
 	}
+	
+	@RequestMapping("/")
+	public String page() {
+		return "mainPage";
+	}
 
 	@RequestMapping("/admin")
 	public String adminPage(Principal principal, Model model) {
