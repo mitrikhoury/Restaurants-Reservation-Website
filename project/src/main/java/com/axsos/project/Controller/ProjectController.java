@@ -53,9 +53,16 @@ public class ProjectController {
 			System.out.println(result.toString() + "^^^^^^");
 			return "registrationPage";
 		}
-
+		User us = userService.findByEmail(user.getEmail());  // null not acord  // not null acord
+		
+		if (us != null) {
+			model.addAttribute("errorRegistration", "Pleace try with anther email . ");
+            return "registrationPage";
+		}
+		
 		userService.saveWithUserRole(user);
-		return "redirect:/login";
+	    return "redirect:/login";
+
 	}
 
 	@GetMapping("/login")
@@ -159,9 +166,9 @@ public class ProjectController {
 		User user = (User) session.getAttribute("loggedInUser");
 		List<TableClass> Tables = tableService.getTablesWithUserId();
 		List<TableClass> OpenTables = tableService.getTablesWithoutUserId();
-		
+
 		model.addAttribute("Tables", Tables);
-        model.addAttribute("Open_table", OpenTables);
+		model.addAttribute("Open_table", OpenTables);
 		return "allTablles";
 	}
 
@@ -174,17 +181,17 @@ public class ProjectController {
 		if (table == null) {
 			return "homePage";
 		}
-		User user =(User)session.getAttribute("loggedInUser");
+		User user = (User) session.getAttribute("loggedInUser");
 		System.out.println("user id " + user.getId());
 		System.out.println("user id of table =" + table.getUser().getId());
 		model.addAttribute("table", table);
-        if(user.getId() == table.getUser().getId()) {
-        	return "editTable";
-        }else {
-        	System.out.println("you dont have access to this table ");
-        	return "";//add page for access denied
-        }
-		
+		if (user.getId() == table.getUser().getId()) {
+			return "editTable";
+		} else {
+			System.out.println("you dont have access to this table ");
+			return "";// add page for access denied
+		}
+
 	}
 
 	@PostMapping("/tables/{id}/edit")
@@ -207,26 +214,26 @@ public class ProjectController {
 		if (session.getAttribute("loggedInUser").equals(null)) {
 			return "/login";
 		}
-		
+
 		tableService.deleteTable(tableService.findTable(id));
 		return "redirect:/home";
 	}
-	
+
 	@PostMapping("/Give_Up_Table/{id}")
-    public String Give_up_Table(@PathVariable("id") Long id, HttpSession session) {
-        if (session.getAttribute("loggedInUser") == null) {
-            return "redirect:/login"; 
-        }
-        tableService.giveUpTable(id); 
-        return "redirect:/tables";
-    }
-	
+	public String Give_up_Table(@PathVariable("id") Long id, HttpSession session) {
+		if (session.getAttribute("loggedInUser") == null) {
+			return "redirect:/login";
+		}
+		tableService.giveUpTable(id);
+		return "redirect:/tables";
+	}
+
 	@PostMapping("/Pick_Up_Table/{id}")
 	public String Pick_up_table(@PathVariable("id") Long id, HttpSession session) {
 		if (session.getAttribute("loggedInUser") == null) {
-            return "redirect:/login"; 
-        }
-		User user = (User)session.getAttribute("loggedInUser");
+			return "redirect:/login";
+		}
+		User user = (User) session.getAttribute("loggedInUser");
 		tableService.pickUpTable(id, user);
 		return "redirect:/home";
 	}
