@@ -7,14 +7,36 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Page</title>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+.image {
+	height: 100px;
+	margin-right: 20px;
+	margin-top: 10px;
+	position: relative;
+	right: 100px;
+}
+</style>
 </head>
 <body>
 
-<header class=" navbar-expand-lg navbar-light text-black py-3 mb-4" style="background-color: #e3f2fd">
-        <div class="container">
-            <h1 class="display-4">MK Restaurant</h1>
-        </div>
-    </header>
+<header class=" navbar-expand-lg navbar-light text-black py-3 mb-4"
+		style="background-color: #ECF9FF"">
+		<div class="container">
+			<img class="image" src="${pageContext.request.contextPath}/pic.png"
+				alt="MK Restaurant Logo">
+				<nav class="navbar navbar-expand-lg navbar-light " style="background-color: #ECF9FF">
+                <a class="navbar-brand"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    </ul>
+                </div>
+            </nav>
+		</div>
+	</header>
 
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -56,7 +78,7 @@
     </div>
 </div>
 
-<footer class=" text-black py-4 mt-5" style="background-color: #e3f2fd">
+<footer class=" text-black py-4 mt-5" style="background-color: #ECF9FF"">
         <div class="container text-center">
             <p class="mb-0">© 2024 MK Restaurant. All rights reserved.</p>
             <p class="mb-0">123 Main Street, City, Country</p>

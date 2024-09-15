@@ -51,6 +51,7 @@ public class ProjectController {
 		System.out.println(user.getUsername());
 		if (result.hasErrors()) {
 			System.out.println(result.toString() + "^^^^^^");
+			model.addAttribute("errorMessageRegestration", "Validation failed: " + result.getAllErrors());
 			return "registrationPage";
 		}
 		User us = userService.findByEmail(user.getEmail());  // null not acord  // not null acord
@@ -58,6 +59,11 @@ public class ProjectController {
 		if (us != null) {
 			model.addAttribute("errorRegistration", "Pleace try with anther email . ");
             return "registrationPage";
+		}
+		
+		if(!user.getPassword().equals(user.getPasswordConfirmation())) {
+		  System.out.println("not match");
+		  model.addAttribute("errorPassword", "password not match. ");
 		}
 		
 		userService.saveWithUserRole(user);
@@ -189,7 +195,7 @@ public class ProjectController {
 			return "editTable";
 		} else {
 			System.out.println("you dont have access to this table ");
-			return "";// add page for access denied
+			return "access-denied";// add page for access denied
 		}
 
 	}
@@ -242,6 +248,11 @@ public class ProjectController {
 	public String page() {
 		return "mainPage";
 	}
+    @RequestMapping("/access-denied")
+    public String accessDenied() {
+        return "access-denied";  // This should be the name of your JSP file without the .jsp extension
+    }
+	
 
 	@RequestMapping("/admin")
 	public String adminPage(Principal principal, Model model) {

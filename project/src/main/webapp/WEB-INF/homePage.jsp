@@ -8,13 +8,22 @@
 <title>Welcome Page</title>
 <!-- Bootstrap CSS -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+.image {
+	height: 100px;
+	margin-right: 20px;
+	margin-top: 10px;
+	position: relative;
+	right: 100px;
+}
+</style>
 </head>
 <body>
     <!-- Header -->
-    <header class=" navbar-expand-lg navbar-light text-black py-3 mb-4" style="background-color: #e3f2fd">
+    <header class=" navbar-expand-lg navbar-light text-black py-3 mb-4" style="background-color: #ECF9FF">
         <div class="container">
-            <h1 class="display-4">MK Restaurant</h1>
-            <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #e3f2fd">
+            <img class="image" src="${pageContext.request.contextPath}/pic.png" alt="MK Restaurant Logo">
+            <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #ECF9FF">
                 <a class="navbar-brand" href="/home">Home</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -94,7 +103,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class=" text-black py-4 mt-5" style="background-color: #e3f2fd">
+    <footer class=" text-black py-4 mt-5" style="background-color: #ECF9FF">
         <div class="container text-center">
             <p class="mb-0">© 2024 MK Restaurant. All rights reserved.</p>
             <p class="mb-0">123 Main Street, City, Country</p>
