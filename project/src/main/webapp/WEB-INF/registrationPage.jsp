@@ -29,17 +29,20 @@
 		<div class="container">
 			<img class="image" src="${pageContext.request.contextPath}/pic.png"
 				alt="MK Restaurant Logo">
-				<nav class="navbar navbar-expand-lg navbar-light " style="background-color: #ECF9FF">
-                <a class="navbar-brand"></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                    </ul>
-                </div>
-            </nav>
+			<nav class="navbar navbar-expand-lg navbar-light "
+				style="background-color: #ECF9FF">
+				<a class="navbar-brand"></a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarNav" aria-controls="navbarNav"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+					</ul>
+				</div>
+			</nav>
 		</div>
 	</header>
 
@@ -47,17 +50,9 @@
 	<div class="container mt-5">
 		<div class="row justify-content-center">
 			<div class="col-md-6">
-			 <c:if test="${errorMessageRegestration != null}">
-                <div class="alert alert-danger" role="alert">
-                    <c:out value="${errorMessage}"></c:out>
-                </div>
-            </c:if>
-             <c:if test="${errorPassword != null}">
-                <div class="alert alert-danger" role="alert">
-                    <c:out value="${errorPassword}"></c:out>
-                </div>
-            </c:if>
-            
+
+
+
 				<!-- Registration Form -->
 				<div class="card">
 					<div class="card-header text-center">
@@ -65,46 +60,44 @@
 					</div>
 					<div class="card-body">
 						<!-- Display Form Errors -->
-						<c:if test="${errorRegistration != null}">
-							<div class="alert alert-danger" role="alert">
-								<c:out value="${errorRegistration}"></c:out>
-							</div>
-						</c:if>
 						<!-- Form -->
-						<form:form method="POST" action="/registration" modelAttribute="user">
-    <div class="form-group">
-        <form:label path="username" cssClass="form-label">Username:</form:label>
-        <form:input path="username" cssClass="form-control" />
-        <!-- Display the error message for the username field -->
-        <form:errors path="username" cssClass="text-danger" />
-    </div>
-    
-    <div class="form-group">
-        <form:label path="email" cssClass="form-label">Email:</form:label>
-        <form:input path="email" cssClass="form-control" />
-        <!-- Display the error message for the email field -->
-        <form:errors path="email" cssClass="text-danger" />
-    </div>
-    
-    <div class="form-group">
-        <form:label path="password" cssClass="form-label">Password:</form:label>
-        <form:password path="password" cssClass="form-control" />
-        <!-- Display the error message for the password field -->
-        <form:errors path="password" cssClass="text-danger" />
-    </div>
-    
-    <div class="form-group">
-        <form:label path="passwordConfirmation" cssClass="form-label">Password Confirmation:</form:label>
-        <form:password path="passwordConfirmation" cssClass="form-control" />
-        <!-- Display the error message for the password confirmation field -->
-        <form:errors path="passwordConfirmation" cssClass="text-danger" />
-    </div>
+						<form:form method="POST" action="/registration"
+							modelAttribute="user">
 
-    <button type="submit" class="btn btn-primary btn-block">Register!</button>
-    <p class="text-center mt-3">
-        Already have an account? <a href="/login"> Log in</a>
-    </p>
-</form:form>
+							<div class="form-group">
+								<form:label path="username" cssClass="form-label">Username:</form:label>
+								<form:input path="username" cssClass="form-control" />
+								<!-- Display the error message for the username field -->
+								<form:errors path="username" cssClass="text-danger" />
+							</div>
+
+							<div class="form-group">
+								<form:label path="email" cssClass="form-label">Email:</form:label>
+								<form:input path="email" cssClass="form-control" />
+								<!-- Display the error message for the email field -->
+								<form:errors path="email" cssClass="text-danger" />
+							</div>
+
+							<div class="form-group">
+								<form:label path="password" cssClass="form-label">Password:</form:label>
+								<form:password path="password" cssClass="form-control" />
+								<!-- Display the error message for the password field -->
+								<form:errors path="password" cssClass="text-danger" />
+							</div>
+
+							<div class="form-group">
+								<form:label path="passwordConfirmation" cssClass="form-label">Password Confirmation:</form:label>
+								<form:password path="passwordConfirmation"
+									cssClass="form-control" />
+								<!-- Display the error message for the password confirmation field -->
+								<form:errors path="passwordConfirmation" cssClass="text-danger" />
+							</div>
+
+							<button type="submit" class="btn btn-primary btn-block">Register!</button>
+							<p class="text-center mt-3">
+								Already have an account? <a href="/login"> Log in</a>
+							</p>
+						</form:form>
 					</div>
 				</div>
 			</div>

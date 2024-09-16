@@ -71,6 +71,9 @@
                         <!-- CSRF Token -->
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        <p class="text-center mt-3">
+								if you dont have account? <a href="/registration"> registration</a>
+							</p>
                     </form>
                 </div>
             </div>

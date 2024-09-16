@@ -25,8 +25,8 @@ public class WebSecurityConfig {
     		http
     		.csrf().disable()
     		.authorizeRequests()
-    	                .requestMatchers("/css/", "/js/", "/registration", "/login" , "/home").permitAll()
-    	                .requestMatchers("/admin/**").access("hasRole('ADMIN')")    // NEW
+    	                .requestMatchers("/css/", "/js/", "/registration", "/login" ).permitAll()
+    	                .requestMatchers("/admin/**").access("hasRole('ADMIN')")    
     	                .anyRequest().permitAll()
     	                .and()
     	           .formLogin()
